@@ -5,7 +5,7 @@ searchable personal library of shots — each tagged with color palette, motion,
 on-screen text, and an AI-generated style/content/mood label.
 
 ```
-video.mp4 → scene detection → thumbnails → CV features → Claude tagging → SQLite → browse in your browser
+video.mp4 → scene detection → thumbnails → CV features → AI tagging → SQLite → browse in your browser
 ```
 
 ## 1. Setup
