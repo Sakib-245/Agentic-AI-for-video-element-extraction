@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shot Library</title>
+<style>
+  :root {
+    --charcoal: #16171a;
+    --panel: #1e2023;
+    --line: #34363b;
+    --leader: #e8542c;
+    --leader-dim: #6b3324;
+    --paper: #eae7e0;
+    --paper-dim: #8b8d92;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--charcoal);
+    background-image:
+      repeating-linear-gradient(90deg, transparent, transparent 63px, rgba(255,255,255,0.025) 63px, rgba(255,255,255,0.025) 65px);
+    color: var(--paper);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .brand .mark {
+    font-family: var(--mono);
+    color: var(--leader);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    border: 1px solid var(--leader-dim);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    margin: 0;
+    color: var(--paper);
+  }
+
+  .count {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--paper-dim);
+  }
+
+  form.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,0.015);
+  }
+
+  form.filters select {
+    background: var(--panel);
+    color: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 7px 10px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    min-width: 140px;
+  }
+
+  form.filters button {
+    background: var(--leader);
+    color: #1a0d07;
+    border: none;
+    border-radius: 3px;
+    padding: 7px 16px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+  }
+
+  form.filters a.clear {
+    color: var(--paper-dim);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    align-self: center;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--paper-dim);
+  }
+
+  .sheet {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    padding: 1px;
+    margin: 24px 32px 48px;
+    border: 1px solid var(--line);
+  }
+
+  .frame {
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .frame .sprocket {
+    position: absolute;
+    top: 8px; left: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--leader);
+    background: rgba(0,0,0,0.55);
+    padding: 2px 6px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    z-index: 2;
+  }
+
+  .frame .thumb-wrap {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #0c0d0f;
+  }
+
+  .frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .frame .meta {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .frame .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    border: 1px solid var(--line);
+    color: var(--paper-dim);
+    text-transform: lowercase;
+  }
+
+  .tag.style   { border-color: var(--leader-dim); color: var(--leader); }
+
+  .palette {
+    display: flex;
+    gap: 3px;
+    margin-top: 2px;
+  }
+
+  .swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .timecode {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--paper-dim);
+    margin-top: 4px;
+  }
+
+  .empty {
+    margin: 80px auto;
+    text-align: center;
+    color: var(--paper-dim);
+    font-family: var(--mono);
+    font-size: 14px;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .empty .leader-strip {
+    height: 3px;
+    width: 60px;
+    background: var(--leader);
+    margin: 0 auto 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="mark">16mm</span>
+    <h1>SHOT LIBRARY</h1>
+  </div>
+  <div class="count">{{ shots|length }} shot{{ '' if shots|length == 1 else 's' }} on the light table</div>
+</header>
+
+<form class="filters" method="get">
+  <select name="style">
+    <option value="">any style</option>
+    {% for s in styles %}
+      <option value="{{ s }}" {{ 'selected' if filters.style == s else '' }}>{{ s }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="content">
+    <option value="">any content</option>
+    {% for c in contents %}
+      <option value="{{ c }}" {{ 'selected' if filters.content == c else '' }}>{{ c }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="mood">
+    <option value="">any mood</option>
+    {% for m in moods %}
+      <option value="{{ m }}" {{ 'selected' if filters.mood == m else '' }}>{{ m }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="has_text">
+    <option value="">text on-screen: any</option>
+    <option value="yes" {{ 'selected' if filters.has_text == 'yes' else '' }}>has on-screen text</option>
+    <option value="no" {{ 'selected' if filters.has_text == 'no' else '' }}>no on-screen text</option>
+  </select>
+
+  <button type="submit">filter</button>
+  <a class="clear" href="/">clear</a>
+</form>
+
+{% if shots %}
+<div class="sheet">
+  {% for shot in shots %}
+  <div class="frame">
+    <span class="sprocket">{{ shot.shot_index + 1 }} · {{ '%d:%02d'|format(shot.start_time // 60, shot.start_time % 60) }}</span>
+    <div class="thumb-wrap">
+      <img src="/thumbnails/{{ shot.thumbnail_name }}" alt="{{ shot.content }}" loading="lazy">
+    </div>
+    <div class="meta">
+      <div class="tags">
+        {% if shot.style %}<span class="tag style">{{ shot.style }}</span>{% endif %}
+        {% if shot.mood %}<span class="tag">{{ shot.mood }}</span>{% endif %}
+      </div>
+      {% if shot.content %}<div class="tag" style="align-self:flex-start;">{{ shot.content }}</div>{% endif %}
+      {% if shot.palette %}
+      <div class="palette">
+        {% for c in shot.palette %}
+          <span class="swatch" style="background: rgb({{ c[0] }},{{ c[1] }},{{ c[2] }});"></span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="timecode">{{ shot.video_filename }} — {{ '%.1f'|format(shot.end_time - shot.start_time) }}s</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <div class="leader-strip"></div>
+  No shots on the table yet.<br>
+  Run <code>python process_video.py your_video.mp4</code> to load footage, then reload this page.
+</div>
+{% endif %}
+
+</body>
+</html>

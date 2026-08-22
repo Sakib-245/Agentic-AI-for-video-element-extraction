@@ -1,0 +1,8 @@
+scenedetect[opencv]==0.6.4
+ffmpeg-python==0.2.0
+opencv-python==4.10.0.84
+scikit-learn==1.5.1
+easyocr==1.7.1
+google-genai==gemini-2.5-flash
+Flask==3.0.3
+numpy==1.26.4
