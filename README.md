@@ -23,7 +23,7 @@ Copy `.env.example` to `.env` and add your Anthropic API key, then load it into
 your shell before running anything, e.g.:
 
 ```bash
-export ANTHROPIC_API_KEY=sk-ant-...     # Windows: set ANTHROPIC_API_KEY=sk-ant-...
+export GENAI_API_KEY=sk-ant-...     # Windows: set ANTHROPIC_API_KEY=sk-ant-...
 ```
 
 (Or use a tool like `python-dotenv` / `direnv` if you prefer not to export it manually.)
