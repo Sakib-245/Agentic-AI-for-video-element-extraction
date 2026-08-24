@@ -2,7 +2,7 @@
 
 A local, PC-only tool that ingests a video, detects every shot/cut, and builds a
 searchable personal library of shots — each tagged with color palette, motion,
-on-screen text, and an AI-generated style/content/mood label.
+on-screen text, and an AI-generated style/content/mood label
 
 ```
 video.mp4 → scene detection → thumbnails → CV features → AI tagging → SQLite → browse in your browser
