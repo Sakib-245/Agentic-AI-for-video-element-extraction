@@ -16,6 +16,7 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
+import pandas
 
 from pipeline import db
 from pipeline.scene_detect import find_shots
