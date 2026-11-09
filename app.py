@@ -7,7 +7,7 @@ Then open: http://127.0.0.1:5000
 """
 import json
 from pathlib import Path
-
+import numpy
 from flask import Flask, render_template, request, send_from_directory
 
 from pipeline import db
